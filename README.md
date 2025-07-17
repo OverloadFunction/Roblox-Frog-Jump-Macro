@@ -8,7 +8,7 @@ This Python script automates a "frog jump" movement sequence in Roblox using key
 
 The script performs the following steps when triggered:
 
-- Simulates pressing the **S** key to crouch briefly.
+- Simulates pressing the **S** key to move backwards.
 - Holds the **Space** key to jump.
 - Simulates pressing **W** to move forward mid-jump.
 - Performs a rapid 180-degree flick using mouse movement.
@@ -23,7 +23,6 @@ The script performs the following steps when triggered:
 - Hotkeys for easy triggering (`F` for frog jump, `Esc` to exit).
 - Cross-platform terminal clearing on startup.
 - Checks for required Python packages and gracefully exits if dependencies are missing.
-- Console output with ASCII banner and user prompts.
 
 ---
 
