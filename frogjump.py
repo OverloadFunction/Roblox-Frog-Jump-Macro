@@ -1,4 +1,4 @@
-#============================== Defualt Imports ==============================#
+#============================== Default Imports ==============================#
 import time
 import sys
 import os
@@ -21,20 +21,22 @@ except ImportError:
     print("Install it with: pip install keyboard")
     sys.exit(1)
 
-#============================== Intro Asci Art ==============================#
+#============================== Intro ASCII Art ==============================#
 def intro():
     print('''
    ___                 _                 _   ___                 _   _             
-  /___\__   _____ _ __| | ___   __ _  __| | / __\   _ _ __   ___| |_(_) ___  _ __  
- //  //\ \ / / _ \ '__| |/ _ \ / _` |/ _` |/ _\| | | | '_ \ / __| __| |/ _ \| '_ \ 
-/ \_//  \ V /  __/ |  | | (_) | (_| | (_| / /  | |_| | | | | (__| |_| | (_) | | | |
-\___/    \_/ \___|_|  |_|\___/ \__,_|\__,_\/    \__,_|_| |_|\___|\__|_|\___/|_| |_|
+  /___\\__   _____ _ __| | ___   __ _  __| | / __\\   _ _ __   ___| |_(_) ___  _ __  
+ //  //\\ \\ / / _ \\ '__| |/ _ \\ / _` |/ _` |/ _\\| | | | '_ \\ / __| __| |/ _ \\| '_ \\ 
+/ \\_//  \\ V /  __/ |  | | (_) | (_| | (_| / /  | |_| | | | | (__| |_| | (_) | | | |
+\\___/    \\_/ \\___|_|  |_|\\___/ \\__,_|\\__,_\\/    \\__,_|_| |_|\\___|\\__|_|\\___/|_| |_|
                                       Frog Jump                                            
 ''')
-    print(f"Press '{start_script_key}' to frog jump. Press {end_script_key} to quit.")
+    print(f"Press '{start_script_key.upper()}' to toggle frog jump. Press '{end_script_key.upper()}' to quit.")
 
 #============================== Exit Handler ==============================#
-def exit():
+def exit_script():
+    global running
+    running = False
     print("Successfully exited script.")
     sys.exit()
 
@@ -63,36 +65,60 @@ def send_mouse_move(dx, dy):
     command = Input(ctypes.c_ulong(0), ii)
     ctypes.windll.user32.SendInput(1, ctypes.pointer(command), ctypes.sizeof(command))
 
+#============================== Frog Jump Toggle State ==============================#
+running = False
+
+def toggle_frog_jump():
+    global running
+    if running:
+        print("[!] Frog jump paused.")
+        running = False
+    else:
+        print("[*] Frog jump started.")
+        running = True
+        frog_jump()
+
 #============================== Frog Jump Macro ==============================#
 def frog_jump():
+    global running
+
     time.sleep(1)
+    if not running:
+        return
 
     keyboard.press('s')
-    time.sleep(0.1)
+    time.sleep(0.15)
     keyboard.release('s')
 
-    keyboard.press('space')
+    if not running:
+        return
 
-    time.sleep(0.1)
+    keyboard.press('space')
+    time.sleep(0.15)
+
     keyboard.press('w')
-    time.sleep(0.1)
+    time.sleep(0.15)
     keyboard.release('w')
 
     for _ in range(10):
+        if not running:
+            return
         send_mouse_move(50, 0)
         time.sleep(0.002)
 
     time.sleep(0.05)
 
     for _ in range(15):
+        if not running:
+            return
         send_mouse_move(-50, 0)
         time.sleep(0.002)
 
     time.sleep(0.3)
 
-#============================== Hotkey ==============================#
-keyboard.add_hotkey(start_script_key, frog_jump)
-keyboard.add_hotkey(end_script_key, exit)
+#============================== Hotkeys ==============================#
+keyboard.add_hotkey(start_script_key, toggle_frog_jump)
+keyboard.add_hotkey(end_script_key, exit_script)
 
 #============================== Start ==============================#
 intro()
