@@ -79,6 +79,11 @@ def toggle_frog_jump():
         frog_jump()
 
 #============================== Frog Jump Macro ==============================#
+
+# Ink Games = 0.15 timing
+
+timing = 0.15
+
 def frog_jump():
     global running
 
@@ -87,17 +92,17 @@ def frog_jump():
         return
 
     keyboard.press('s')
-    time.sleep(0.15)
+    time.sleep(timing)
     keyboard.release('s')
 
     if not running:
         return
 
     keyboard.press('space')
-    time.sleep(0.15)
+    time.sleep(0.1)
 
     keyboard.press('w')
-    time.sleep(0.15)
+    time.sleep(timing)
     keyboard.release('w')
 
     for _ in range(10):
