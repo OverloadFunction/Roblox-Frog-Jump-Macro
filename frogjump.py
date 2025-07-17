@@ -8,6 +8,12 @@ import ctypes
 start_script_key = 'f'
 end_script_key = 'esc'
 
+# Please note different games have different speeds, so you may need to mess around with it to find the right timing...
+
+# Defualt = 0.1 timing
+# Ink Games = 0.15 timing
+timing = 0.15
+
 #============================== Clear Terminal On Run ==============================#
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -82,7 +88,6 @@ def toggle_frog_jump():
 
 # Ink Games = 0.15 timing
 
-timing = 0.15
 
 def frog_jump():
     global running
