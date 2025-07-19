@@ -12,7 +12,7 @@ end_script_key = 'esc'
 
 # Defualt = 0.1 timing
 # Ink Games = 0.15 timing
-timing = 0.15
+timing = 0.1
 
 #============================== Clear Terminal On Run ==============================#
 def clear_terminal():
